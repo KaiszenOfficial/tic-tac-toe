@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@400;700&display=swap');
+
+body {
+  margin: 0;
+  background-color: #282c34;
+  font-family: 'Baloo Chettan 2', cursive;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #ffffff;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+#root {
+  height: 100%;
+}

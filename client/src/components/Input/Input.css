@@ -1,0 +1,18 @@
+input {
+	background-color: transparent;
+	box-shadow: none;
+	color: #ffffff;
+	border: none;
+	border-bottom: 1px solid #61dafb;
+	padding: 15px 10px;
+	font-size: 1rem;
+	font-family: 'Baloo Chettan 2';
+}
+
+input:focus {
+	box-shadow: none;
+	border: none;
+	outline: none;
+	box-shadow: 0 3px #61dafb;
+	transition: all .25s linear;
+}
