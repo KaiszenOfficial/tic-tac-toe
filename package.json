@@ -5,11 +5,13 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon app.js"
+    "start": "DEBUG=TicTacToe:* node app.js",
+    "dev": "set DEBUG=TicTacToe:* & nodemon app.js"
   },
   "author": "Supratik Roy",
   "license": "MIT",
   "dependencies": {
+    "debug": "^4.3.2",
     "express": "^4.17.1",
     "nanoid": "^3.1.25",
     "socket.io": "^4.1.3"
