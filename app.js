@@ -13,9 +13,9 @@ const app = express();
 let users = [];
 let games = [];
 const initialGameState = [
-  ['-', '-', '-'],
-  ['-', '-', '-'],
-  ['-', '-', '-'],
+  ['', '', ''],
+  ['', '', ''],
+  ['', '', ''],
 ];
 
 const server = http.createServer(app);

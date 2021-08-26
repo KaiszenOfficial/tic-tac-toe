@@ -2,11 +2,11 @@
 
 body {
   margin: 0;
-  background-color: #282c34;
+  background-color: #abb2bf;
   font-family: 'Baloo Chettan 2', cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #ffffff;
+  color: #282c34;
 }
 
 code {
