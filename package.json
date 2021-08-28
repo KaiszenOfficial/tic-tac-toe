@@ -6,11 +6,18 @@
   "type": "module",
   "scripts": {
     "start": "DEBUG=TicTacToe:* node app.js",
-    "dev": "set DEBUG=TicTacToe:* & nodemon app.js"
+    "client": "npm start --prefix client",
+    "client:install": "npm install --prefix client",
+    "start:dev": "DEBUG=TicTacToe:* & nodemon",
+    "start:dev:windows": "set DEBUG=TicTacToe:* & nodemon app.js",
+    "serve:dev": "concurrently \"npm run start:dev\" \"npm run client\"",
+    "serve:dev:windows": "concurrently \"npm run start:dev:windows\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "Supratik Roy",
   "license": "MIT",
   "dependencies": {
+    "concurrently": "^6.2.1",
     "debug": "^4.3.2",
     "express": "^4.17.1",
     "nanoid": "^3.1.25",

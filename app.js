@@ -3,6 +3,7 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import { nanoid } from 'nanoid';
+import path from 'path';
 
 // setup debug namespace for file
 const debug = Debug('TicTacToe:app');
@@ -21,10 +22,6 @@ const initialGameState = [
 const server = http.createServer(app);
 
 const socketio = new Server(server, { cors: { origin: '*' } });
-
-app.get('/', (req, res) => {
-  res.send('Welcome to Tic Tac Toe server');
-});
 
 socketio.on('connection', (socket) => {
   debug(`client connection... ${socket.id}`);
@@ -159,6 +156,14 @@ socketio.on('connection', (socket) => {
     users = users.filter((user) => user.clientId !== socket.id);
   });
 });
+
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  })
+}
 
 server.listen(port, host, () =>
   debug('Server running on port %s:%s', host, port)
