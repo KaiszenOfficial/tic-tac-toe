@@ -28,8 +28,11 @@ npm run client
 # Server runs on http://localhost:5000 and client on http://localhost:3000
 ```
 
-#### Tech Stack
-*My tech stack of choice for this little project was **NodeJS (Express)** for the backend and **ReactJS** with **Material UI** for the front end.*
+**:wrench: Technologies and Tools**
 
-#### Current Version and Future plans
-*Currently it supports two player games pretty well. Although in the future, I do plan on adding a play against computer feature where you can essentially test your might against the program which will choose the squares based on some algorithm as well as maybe make some UI changes.*
+![](https://img.shields.io/badge/Code-Node_JS-informational?style=flat&logo=nodedotjs&logoColor=white&color=2bbc8a) ![](https://img.shields.io/badge/Code-Socket.io-informational?style=flat&logo=socketdotio&logoColor=white&color=2bbc8a) ![](https://img.shields.io/badge/Code-React-informational?style=flat&logo=react&logoColor=white&color=2bbc8a)
+
+**:spiral_notepad: Current status and future tasks**
+
+- Currently two player online matches works fine.
+- In the future I am planning to add a **vs Computer** option and implement the logic for it.
