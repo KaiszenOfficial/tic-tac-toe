@@ -99,11 +99,11 @@ socketio.on('connection', (socket) => {
     let columnLength = currentGameState[0].length;
 
     // loop through elements in currentGameSate to check whether winning conditions have been met
+    let leftDiagonal = '';
+    let rightDiagonal = '';
     for (let i = 0; i < rowLength; i++) {
       let row = '';
       let column = '';
-      let leftDiagonal = '';
-      let rightDiagonal = '';
       for (let j = 0; j < columnLength; j++) {
         // value of rows
         row = row + currentGameState[i][j];
@@ -150,6 +150,7 @@ socketio.on('connection', (socket) => {
     } else {
       debug('GameOver', currentGame);
       currentGame.winner = username;
+      
       socketio.in(gameId).emit('game-over', currentGame);
     }
   });

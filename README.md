@@ -1,5 +1,7 @@
 ### A Simple Game of Tic-Tac-Toe
-![stock-tic-tac-toe-image](tic-tac-toe.webp)
+![Landing Page](./screenshots/screenshot1.png)
+![Game Screen](./screenshots/screenshot2.png)
+![Game Over Screen](./screenshots/screenshot3.png)
 
 #### What is TicTacToe?
 **Well the answer to that is**
