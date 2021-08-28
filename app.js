@@ -54,10 +54,13 @@ socketio.on('connection', (socket) => {
     if (!currentGame.playerO) {
       currentGame.playerO = username;
       socket.join(gameId);
+      // emit to joining player that he has joined the game
       socketio.to(socket.id).emit('game-joined', currentGame);
+      // find the other player clientId and send an event notifying that another player has joined
       let playerX = users.find((user) => user.username === currentGame.playerX);
       socketio.to(playerX.clientId).emit('new-player-joined', { username, currentGame });
     } else if (currentGame.playerX && currentGame.playerO) {
+      // emit this event only when game is full
       socketio
         .to(socket.id)
         .emit('game-full', { error: 'Max participant capacity reached' });
@@ -66,9 +69,12 @@ socketio.on('connection', (socket) => {
 
   socket.on('player-turn', ({ gameId, username, block }) => {
     debug(gameId, username, block);
+    // fetch currentGame based on gameId supplied
     let currentGame = games.find((game) => game.id == gameId);
+    // assign currentGameState with currentGame's currentGameState
     let currentGameState = currentGame.currentGameState;
 
+    // assign block based on which player turn it is currently
     currentGameState[block[0]][block[1]] =
       currentGameState[block[0]][block[1]] === ''
         ? currentGame.playerX === username
@@ -76,52 +82,59 @@ socketio.on('connection', (socket) => {
           : 'O'
         : currentGameState[block[0]][block[1]];
 
+    // assign nextPlayerTurn based on currentPlayer
     currentGame.nextPlayerTurn =
       currentGame.playerX === username
         ? currentGame.playerO
         : currentGame.playerX;
 
+    // assign currentGame state back to currentGame object
     currentGame.currentGameState = currentGameState;
 
     // handle winning and game-over logic
     // emit event based on above logic
     let isGameOver = false;
+    // get row and column length
     let rowLength = currentGameState.length;
     let columnLength = currentGameState[0].length;
 
+    // loop through elements in currentGameSate to check whether winning conditions have been met
     for (let i = 0; i < rowLength; i++) {
-      let sumRow = '';
-      let sumColumn = '';
-      let sumLeftDiag = '';
-      let sumRightDiag = '';
+      let row = '';
+      let column = '';
+      let leftDiagonal = '';
+      let rightDiagonal = '';
       for (let j = 0; j < columnLength; j++) {
-        sumRow = sumRow + currentGameState[i][j];
-        sumColumn = sumColumn + currentGameState[j][i];
+        // value of rows
+        row = row + currentGameState[i][j];
+        // value of columns
+        column = column + currentGameState[j][i];
+        // check left diagonal
         if (i === j) {
-          sumLeftDiag = sumLeftDiag + currentGameState[i][j];
+          leftDiagonal = leftDiagonal + currentGameState[i][j];
         }
-
+        // check right diagonal
         if (j == rowLength - i - 1) {
-          sumRightDiag = sumRightDiag + currentGameState[i][j];
+          rightDiagonal = rightDiagonal + currentGameState[i][j];
         }
       }
       debug(
-        `sumRow: ${sumRow}, sumColumn: ${sumColumn}, sumLeftDiag: ${sumLeftDiag}, sumRightDiag: ${sumRightDiag}`
+        `row: ${row}, column: ${column}, leftDiagonal: ${leftDiagonal}, rightDiagonal: ${rightDiagonal}`
       );
       if (
-        sumRow == 'XXX' ||
-        sumColumn == 'XXX' ||
-        sumLeftDiag == 'XXX' ||
-        sumRightDiag == 'XXX'
+        row == 'XXX' ||
+        column == 'XXX' ||
+        leftDiagonal == 'XXX' ||
+        rightDiagonal == 'XXX'
       ) {
         isGameOver = true;
         currentGame.winner = currentGame.playerX;
         break;
       } else if (
-        sumRow == 'OOO' ||
-        sumColumn == 'OOO' ||
-        sumLeftDiag == 'OOO' ||
-        sumRightDiag == 'OOO'
+        row == 'OOO' ||
+        column == 'OOO' ||
+        leftDiagonal == 'OOO' ||
+        rightDiagonal == 'OOO'
       ) {
         isGameOver = true;
         currentGame.winner = currentGame.playerO;
