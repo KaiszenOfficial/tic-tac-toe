@@ -5,7 +5,7 @@ import { Server } from 'socket.io';
 import { nanoid } from 'nanoid';
 
 // setup debug namespace for file
-const debug = Debug('TicTacToe:app')
+const debug = Debug('TicTacToe:app');
 
 const port = process.env.PORT || 5000;
 const host = process.env.HOST || '0.0.0.0';
@@ -56,7 +56,7 @@ socketio.on('connection', (socket) => {
       socket.join(gameId);
       socketio.to(socket.id).emit('game-joined', currentGame);
       let playerX = users.find((user) => user.username === currentGame.playerX);
-      socketio.in(playerX.clientId).emit('new-player-joined', { username });
+      socketio.to(playerX.clientId).emit('new-player-joined', { username, currentGame });
     } else if (currentGame.playerX && currentGame.playerO) {
       socketio
         .to(socket.id)
@@ -70,7 +70,7 @@ socketio.on('connection', (socket) => {
     let currentGameState = currentGame.currentGameState;
 
     currentGameState[block[0]][block[1]] =
-      currentGameState[block[0]][block[1]] === '-'
+      currentGameState[block[0]][block[1]] === ''
         ? currentGame.playerX === username
           ? 'X'
           : 'O'
@@ -89,11 +89,11 @@ socketio.on('connection', (socket) => {
     let rowLength = currentGameState.length;
     let columnLength = currentGameState[0].length;
 
-    let sumRow = '';
-    let sumColumn = '';
-    let sumLeftDiag = '';
-    let sumRightDiag = '';
     for (let i = 0; i < rowLength; i++) {
+      let sumRow = '';
+      let sumColumn = '';
+      let sumLeftDiag = '';
+      let sumRightDiag = '';
       for (let j = 0; j < columnLength; j++) {
         sumRow = sumRow + currentGameState[i][j];
         sumColumn = sumColumn + currentGameState[j][i];

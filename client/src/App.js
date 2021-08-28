@@ -67,8 +67,9 @@ function App() {
       setIsLoggedIn(true);
     });
 
-    newSocket.on('new-player-joined', ({ username }) => {
+    newSocket.on('new-player-joined', ({ username, currentGame }) => {
       alert(`New player ${username} has joined`);
+      setCurrentGame(currentGame);
     });
 
     newSocket.on('player-turn-over', (currentGame) => {

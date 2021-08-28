@@ -7,7 +7,7 @@ export default function Game({ socket, username, currentGame, isGameOver }) {
   console.log(username, currentGame);
   const handleBlockClick = (e, indexMap) => {
     if (
-      e.target.innerHTML === '-' &&
+      e.target.innerHTML === '' &&
       currentGame.nextPlayerTurn === username &&
       !isGameOver
     ) {
